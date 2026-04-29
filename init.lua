@@ -35,7 +35,8 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
-vim.keymap.set('n', '<leader>ef', vim.cmd.Ex, { desc = 'Exit file' })
+-- vim.keymap.set('n', '<leader>ef', vim.cmd.Ex, { desc = 'Exit file' })
+vim.keymap.set('n', '<leader>ef', '<cmd>Neotree %<CR>', { desc = 'Exit file' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 
@@ -69,6 +70,24 @@ require('lazy').setup({
       "nvim-tree/nvim-web-devicons", -- optional, but recommended
     },
     lazy = false, -- neo-tree will lazily load itself
+    config = function()
+      require("neo-tree").setup({
+        window = {
+          mappings = {
+            ["e"] = "open",
+            ["<esc>"] = "close_window"
+          }
+        },
+        event_handlers = {
+          {
+            event = "file_open_requested",
+            handler = function()
+              require("neo-tree.command").execute({ action = "close" })
+            end
+          },
+        }
+      })
+    end
   },
   {
     'windwp/nvim-autopairs',
