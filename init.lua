@@ -91,6 +91,8 @@ require('lazy').setup({
         window = {
           mappings = {
             ["e"] = "open",
+            ["h"] = "close_all_subnodes",
+            ["l"] = "open",
             ["<esc>"] = "close_window"
           }
         },
@@ -101,6 +103,12 @@ require('lazy').setup({
               require("neo-tree.command").execute({ action = "close" })
             end
           },
+        },
+        filesystem = {
+          filtered_items = {
+            visible = true,
+            children_inherit_highlights = false
+          }
         }
       })
     end
