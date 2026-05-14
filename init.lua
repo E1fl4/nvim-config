@@ -48,6 +48,22 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Uncomment these if you have kitty with padding and don't want padding in neovim.
+-- Remember to change padding-v and padding-h to be the same as your window_padding_width values.
+-- In kitty.conf you want:
+--     allow_remote_control yes
+--     listen_on unix:/tmp/mykitty
+
+-- vim.api.nvim_create_autocmd('VimEnter', {
+--   pattern = '*',
+--   command = 'silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding=0',
+-- })
+
+-- vim.api.nvim_create_autocmd('VimLeave', {
+--   pattern = '*',
+--   command = 'silent !kitty @ --to=$KITTY_LISTEN_ON set-spacing padding-v=15 padding-h=26',
+-- })
+
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   local lazyrepo = 'https://github.com/folke/lazy.nvim.git'
