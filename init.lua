@@ -207,13 +207,44 @@ require('lazy').setup({
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      -- vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
       vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
       vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
       vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+      vim.keymap.set('n', '<leader>sf', function()
+        local pickers = require("telescope.pickers")
+        local finders = require("telescope.finders")
+        local conf = require("telescope.config").values
+        local oldfiles = vim.v.oldfiles
+        pickers.new({}, {
+          prompt_title = "Oldfiles",
+          finder = finders.new_dynamic {
+            fn = function(prompt)
+              if not prompt or prompt == "" then
+                return oldfiles
+              end
+
+              local results = {}
+              local prompt_lower = prompt:lower()
+
+              for _, file in ipairs(oldfiles) do
+                local name = vim.fn.fnamemodify(file, ":t")
+                if name:lower():find(prompt_lower, 1, true) then
+                  table.insert(results, file)
+                end
+              end
+
+              return results
+            end,
+          },
+          sorter = require("telescope.sorters").empty(),
+          previewer = conf.file_previewer({}),
+        }):find()
+      end, { desc = '[S]earch [F]iles' })
+
       vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
       vim.keymap.set('n', '<leader>/', function()
