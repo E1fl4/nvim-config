@@ -480,6 +480,7 @@ require('lazy').setup({
         glsl_analyzer = {},
         rust_analyzer = {},
         cssls = {},
+        html = {},
 
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
