@@ -2,5 +2,5 @@
 
 One line install on Arch:
 ```
-sudo pacman -S --needed git npm && git clone https://github.com/EirikErKulere/nvim-config-main.git ~/.config/nvim
+sudo pacman -S --needed git npm && git clone https://github.com/E1fl4/nvim-config.git ~/.config/nvim
 ```
